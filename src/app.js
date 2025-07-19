@@ -1,13 +1,15 @@
 import express from "express"
-import dotenv from "dotenv"
 import { getEnv } from "./utils/getEnv.js";
-
-dotenv.config();
+import { initDb } from "./db/initDb.js";
 
 const app = express();
 
 const PORT = getEnv("PORT", 3000);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+(async () => {
+  await initDb();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+})();
